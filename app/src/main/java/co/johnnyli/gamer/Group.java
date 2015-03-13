@@ -12,10 +12,14 @@ import com.astuetz.PagerSlidingTabStrip;
 
 public class Group extends ActionBarActivity {
 
+    public static String nameOfGroup;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group);
+        nameOfGroup = this.getIntent().getExtras().getString("name");
+        setTitle(nameOfGroup);
         //Code for Tabs
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
         viewPager.setAdapter(new GroupFragmentPageAdapter(getSupportFragmentManager()));
@@ -27,28 +31,16 @@ public class Group extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_group, menu);
+        getMenuInflater().inflate(R.menu.menu_feed, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId()) {
             case R.id.action_search:
                 Intent search = new Intent(this, Search.class);
                 startActivity(search);
-                return true;
-//            case R.id.action_home:
-//                return true;
-//            case R.id.action_notification:
-//                //insert notification function here
-//                return true;
-            case R.id.action_profile:
-                return true;
-            case R.id.action_group:
                 return true;
         }
 

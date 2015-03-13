@@ -6,11 +6,14 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.astuetz.PagerSlidingTabStrip;
 
 
 public class Feed extends ActionBarActivity {
+    private static long back_pressed;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,16 +30,12 @@ public class Feed extends ActionBarActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_feed, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
         switch (item.getItemId()) {
@@ -44,21 +43,17 @@ public class Feed extends ActionBarActivity {
                 Intent search = new Intent(this, Search.class);
                 startActivity(search);
                 return true;
-//            case R.id.action_home:
-//                Intent home = new Intent(this, Feed.class);
-//                startActivity(home);
-//                return true;
-//            case R.id.action_notification:
-//                //insert notification function here
-//                return true;
-            case R.id.action_profile:
-                return true;
-            case R.id.action_group:
-                Intent group = new Intent(this, Group.class);
-                startActivity(group);
-                return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (back_pressed + 2000 > System.currentTimeMillis())
+            super.onBackPressed();
+        else
+            Toast.makeText(getBaseContext(), "Press back again to log out", Toast.LENGTH_SHORT).show();
+        back_pressed = System.currentTimeMillis();
     }
 }

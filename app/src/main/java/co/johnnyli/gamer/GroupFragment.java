@@ -14,76 +14,63 @@ import android.widget.Toast;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
  * Created by johnnyli on 3/9/15.
  */
-public class FeedFragment extends ListFragment implements AdapterView.OnItemClickListener {
+public class GroupFragment extends ListFragment implements AdapterView.OnItemClickListener{
 
     private ListView listView;
-    FeedJSONAdapter mJSONAdapter;
-    private static final String URL = "http://10.12.6.28:8000/Feed.json";
+    GroupListJSONAdapter mJSONAdapter;
+    private static final String URL = "http://10.12.6.28:8000/user_group.json";
     ProgressDialog mDialog;
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.feed_fragment, container, false);
+        View view = inflater.inflate(R.layout.group_fragment, container, false);
         listView = (ListView) view.findViewById(android.R.id.list);
-        mDialog = new ProgressDialog(FeedFragment.this.getActivity());
+        mDialog = new ProgressDialog(GroupFragment.this.getActivity());
         mDialog.setMessage("Loading");
         mDialog.setCancelable(true);
-        getFeed();
+        getGroup();
         return view;
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-        mJSONAdapter = new FeedJSONAdapter(getActivity(), getActivity().getLayoutInflater());
+        mJSONAdapter = new GroupListJSONAdapter(getActivity(), getActivity().getLayoutInflater());
         listView.setAdapter(mJSONAdapter);
         listView.setOnItemClickListener(this);
-
 
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         JSONObject jsonObject = (JSONObject) mJSONAdapter.getItem(position);
-        String pk = jsonObject.optString("pk");
-        String group = jsonObject.optString("group");
-        String owner_name = jsonObject.optString("owner_name");
-        String text = jsonObject.optString("text");
-        String image_url = jsonObject.optString("image_url");
-        Intent detailIntent = new Intent(FeedFragment.this.getActivity(), DetailView.class);
-        detailIntent.putExtra("pk", pk);
-        detailIntent.putExtra("group", group);
-        detailIntent.putExtra("owner_name", owner_name);
-        detailIntent.putExtra("text", text);
-        detailIntent.putExtra("image_url", image_url);
-        startActivity(detailIntent);
+        String name = jsonObject.optString("name");
+        Intent groupIntent = new Intent(GroupFragment.this.getActivity(), Group.class);
+        groupIntent.putExtra("name", name);
+        startActivity(groupIntent);
     }
 
-    private void getFeed() {
+    private void getGroup() {
         AsyncHttpClient client = new AsyncHttpClient();
         mDialog.show();
         client.get(URL, new JsonHttpResponseHandler() {
 
-
             @Override
-            public void onSuccess(JSONArray jsonArray) {
+            public void onSuccess(JSONObject jsonObject) {
                 mDialog.dismiss();
-                mJSONAdapter.updateData(jsonArray);
+                mJSONAdapter.updateData(jsonObject.optJSONArray("groups"));
 
             }
 
             @Override
             public void onFailure(int statusCode, Throwable throwable, JSONObject error) {
                 mDialog.dismiss();
-                Toast.makeText(FeedFragment.this.getActivity(), "Error: " + statusCode + " " +
+                Toast.makeText(GroupFragment.this.getActivity(), "Error: " + statusCode + " " +
                         throwable.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
