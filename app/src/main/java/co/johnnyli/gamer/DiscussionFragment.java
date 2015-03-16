@@ -56,7 +56,6 @@ public class DiscussionFragment extends ListFragment implements AdapterView.OnIt
         mJSONAdapter = new DiscussionJSONAdapter(getActivity(), getActivity().getLayoutInflater());
         listView.setAdapter(mJSONAdapter);
         listView.setOnItemClickListener(this);
-
     }
 
     @Override
@@ -76,15 +75,11 @@ public class DiscussionFragment extends ListFragment implements AdapterView.OnIt
         AsyncHttpClient client = new AsyncHttpClient();
         mDialog.show();
         client.get(URL, new JsonHttpResponseHandler() {
-
-
             @Override
             public void onSuccess(JSONArray jsonArray) {
                 mDialog.dismiss();
                 mJSONAdapter.updateData(jsonArray);
-
             }
-
             @Override
             public void onFailure(int statusCode, Throwable throwable, JSONObject error) {
                 mDialog.dismiss();
@@ -93,7 +88,6 @@ public class DiscussionFragment extends ListFragment implements AdapterView.OnIt
             }
         });
     }
-
     @Override
     public void onClick(View v) {
         InputMethodManager imm = (InputMethodManager)getActivity()
