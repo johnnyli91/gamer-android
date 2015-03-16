@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,9 +19,13 @@ import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 /**
  * Created by johnnyli on 3/6/15.
@@ -93,6 +98,21 @@ public class DiscussionFragment extends ListFragment implements AdapterView.OnIt
         InputMethodManager imm = (InputMethodManager)getActivity()
                 .getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(newPost.getWindowToken(), 0);
+        RequestParams params = new RequestParams();
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String strDate = sdf.format(cal.getTime());
+        params.put("text", newPost.getText().toString());
+        params.put("timestamp", strDate);
+        params.put("owner_name", ProfileFragment.userFacebookName);
+        Log.d("this is a test", params.toString());
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.post(URL, params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(JSONObject jsonObject) {
+                Log.d("testing", "it worked!!!");
+            }
+        });
         newPost.setText("");
     }
 }

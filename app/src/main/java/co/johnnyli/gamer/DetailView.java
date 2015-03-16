@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,9 +19,13 @@ import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 /**
  * Created by johnnyli on 3/9/15.
@@ -37,12 +42,14 @@ public class DetailView extends ActionBarActivity implements View.OnClickListene
     EditText add_comment;
     Button post_comment;
     ImageView avatarView;
+    private String pk;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.detail_view);
-        String pk = this.getIntent().getExtras().getString("pk");
+        pk = this.getIntent().getExtras().getString("pk");
         String owner_name = "";
         if (this.getIntent().getExtras().getString("group") != null) {
             owner_name = this.getIntent().getExtras().getString("owner_name") + " in "
@@ -118,6 +125,22 @@ public class DetailView extends ActionBarActivity implements View.OnClickListene
     public void onClick(View v) {
         InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(add_comment.getWindowToken(), 0);
+        RequestParams params = new RequestParams();
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String strDate = sdf.format(cal.getTime());
+        params.put("text", add_comment.getText().toString());
+        params.put("timestamp", strDate);
+        params.put("owner_name", ProfileFragment.userFacebookName.toString());
+        params.put("post", pk);
+        Log.d("this is a test", params.toString());
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.post(URL, params, new JsonHttpResponseHandler() {
+           @Override
+           public void onSuccess(JSONObject jsonObject) {
+               Log.d("testing", "it worked!!!");
+           }
+        });
         add_comment.setText("");
     }
 }
