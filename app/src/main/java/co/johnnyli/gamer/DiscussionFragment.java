@@ -105,8 +105,8 @@ public class DiscussionFragment extends ListFragment implements AdapterView.OnIt
         params.put("group", pk);
         params.put("owner", "4");
         AsyncHttpClient client = new AsyncHttpClient();
-        client.addHeader("X-CSRFToken", MainActivity.csrftoken);
-        client.addHeader("Authorization", MainActivity.auth);
+        client.addHeader("X-CSRFToken", Info.csrftoken);
+        client.addHeader("Authorization", Info.auth);
         client.post(postURL, params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(JSONObject jsonObject) {

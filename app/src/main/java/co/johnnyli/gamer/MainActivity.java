@@ -35,8 +35,6 @@ public class MainActivity extends ActionBarActivity {
     private boolean isResumed = false;
     private UiLifecycleHelper uiHelper;
     private String URL = "http://ec2-52-11-124-82.us-west-2.compute.amazonaws.com/rest-auth/login/";
-    public static String csrftoken = "hRRMOI45CzVbtmPmXdDFDfwqOAVBXure";
-    public static String auth = "Basic am9obm55bGk5MTo3dTJHUUZERkpOaFZzRlBGTW9Sbg==";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

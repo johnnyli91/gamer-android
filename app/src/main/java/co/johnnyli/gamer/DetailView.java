@@ -133,8 +133,8 @@ public class DetailView extends ActionBarActivity implements View.OnClickListene
         params.put("text", add_comment.getText().toString());
         params.put("post", pk);
         AsyncHttpClient client = new AsyncHttpClient();
-        client.addHeader("X-CSRFToken", MainActivity.csrftoken);
-        client.addHeader("Authorization", MainActivity.auth);
+        client.addHeader("X-CSRFToken", Info.csrftoken);
+        client.addHeader("Authorization", Info.auth);
         client.post(postURL, params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(JSONObject jsonObject) {
