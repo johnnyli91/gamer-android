@@ -3,12 +3,12 @@ package co.johnnyli.gamer;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
@@ -24,12 +24,15 @@ public class FeedFragment extends ListFragment implements AdapterView.OnItemClic
     private static final String URL = "http://ec2-52-11-124-82.us-west-2.compute.amazonaws.com/api/groups/feed";
     private static final String infoURL = "http://ec2-52-11-124-82.us-west-2.compute.amazonaws.com/api/myinfo";
     public static String userpk;
+    private TextView noGroup;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.feed_fragment, container, false);
         listView = (ListView) view.findViewById(android.R.id.list);
         getFeed();
+        noGroup = (TextView) view.findViewById(R.id.no_posts);
+        noGroup.setVisibility(View.GONE);
         return view;
     }
 
@@ -66,7 +69,11 @@ public class FeedFragment extends ListFragment implements AdapterView.OnItemClic
 
             @Override
             public void onSuccess(JSONObject jsonObject) {
-                mJSONAdapter.updateData(jsonObject.optJSONArray("results"));
+                if (jsonObject.optJSONArray("results").length() > 0) {
+                    mJSONAdapter.updateData(jsonObject.optJSONArray("results"));
+                } else {
+                    noGroup.setVisibility(View.VISIBLE);
+                }
             }
 
             @Override
@@ -85,7 +92,6 @@ public class FeedFragment extends ListFragment implements AdapterView.OnItemClic
                     JSONObject jsonData = jsonArray.getJSONObject(0);
                     userpk = jsonData.optString("pk");
                 } catch (Exception e) {
-                    Log.d("Error!", e.toString());
                 }
             }
         });

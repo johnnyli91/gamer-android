@@ -30,7 +30,7 @@ public class AddGroup extends ActionBarActivity implements View.OnClickListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_group);
         setTitle("Add Group");
-        String color = MainActivity.color;
+        String color = Feed.color;
         ActionBar bar = getSupportActionBar();
         bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor(color)));
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
@@ -64,7 +64,6 @@ public class AddGroup extends ActionBarActivity implements View.OnClickListener{
                 joinClient.post(createURL + "join", joinParams, new JsonHttpResponseHandler() {
                     @Override
                     public void onFailure(int statusCode1, Throwable throwable1, JSONObject error1) {
-                        Log.d("JOIN Error", error1.toString());
                     }
                 });
                 group.putExtra("pk", newGroupKey);

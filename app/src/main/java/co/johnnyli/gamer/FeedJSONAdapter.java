@@ -56,7 +56,8 @@ public class FeedJSONAdapter extends BaseAdapter {
         }
         JSONObject jsonObject = (JSONObject) getItem(position);
         if (jsonObject.has("owner_profile_image")) {
-            Picasso.with(mContext).load(jsonObject.optString("owner_profile_image")).into(holder.avatarView);
+            Picasso.with(mContext).load(jsonObject.optString("owner_profile_image")).placeholder(R.drawable.avatar)
+                    .into(holder.avatarView);
         } else {
             holder.avatarView.setVisibility(View.GONE);
         }

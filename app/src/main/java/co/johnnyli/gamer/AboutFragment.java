@@ -3,7 +3,6 @@ package co.johnnyli.gamer;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -85,7 +84,6 @@ public class AboutFragment extends Fragment implements View.OnClickListener, Ada
 
             @Override
             public void onFailure(int statusCode, Throwable throwable, JSONObject error) {
-                Log.d("ERROR!", error.toString());
                 Toast.makeText(AboutFragment.this.getActivity(), "You're already a member of the group!", Toast.LENGTH_LONG).show();
             }
         });

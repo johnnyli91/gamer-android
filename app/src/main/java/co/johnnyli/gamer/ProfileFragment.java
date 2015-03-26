@@ -4,10 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,13 +18,18 @@ import com.squareup.picasso.Picasso;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class ProfileFragment extends Fragment {
+public class ProfileFragment extends Fragment implements View.OnClickListener{
 
     private ImageView profilePictureView;
     private TextView name;
     private TextView description;
     Context mContext;
     private static final String URL = "http://ec2-52-11-124-82.us-west-2.compute.amazonaws.com/api/myinfo";
+    private String pk;
+    private String gender;
+    private String dob;
+    private String location;
+    private String bio;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -38,6 +43,8 @@ public class ProfileFragment extends Fragment {
         profilePictureView = (ImageView) view.findViewById(R.id.profile_image);
         name = (TextView) view.findViewById(R.id.username);
         description = (TextView) view.findViewById(R.id.profile_info);
+        Button edit = (Button) view.findViewById(R.id.edit);
+        edit.setOnClickListener(this);
         getInfo();
         return view;
     }
@@ -65,18 +72,17 @@ public class ProfileFragment extends Fragment {
                     String username = jsonData.optString("username");
                     name.setText(username);
                     JSONObject profile = jsonData.optJSONObject("profile");
-                    String bio = profile.optString("bio");
-                    String picture = profile.optString("picture");
-                    Picasso.with(mContext).load(picture).into(profilePictureView);
-
-                    String gender = profile.optString("gender");
-                    String dob = profile.optString("dob");
-                    String location = profile.optString("location");
+                    bio = profile.optString("bio");
+                    gender = profile.optString("gender");
+                    dob = profile.optString("dob");
+                    pk = profile.optString("pk");
+                    location = profile.optString("location");
                     description.setText("Bio: " + bio + "\nGender: " + gender + "\nBirthday: " + dob
                             + "\nLocation: " + location);
+                    String picture = profile.optString("picture");
+                    Picasso.with(mContext).load(picture).placeholder(R.drawable.avatar).into(profilePictureView);
 
                 } catch (Exception e) {
-                    Log.d("ERROR!!!", e.toString());
                 }
             }
 
@@ -84,4 +90,14 @@ public class ProfileFragment extends Fragment {
 
     }
 
+    @Override
+    public void onClick(View v) {
+        Intent editProfile = new Intent(ProfileFragment.this.getActivity(), EditProfile.class);
+        editProfile.putExtra("pk", pk);
+        editProfile.putExtra("bio", bio);
+        editProfile.putExtra("dob", dob);
+        editProfile.putExtra("gender", gender);
+        editProfile.putExtra("location", location);
+        startActivity(editProfile);
+    }
 }

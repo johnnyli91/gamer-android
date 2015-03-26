@@ -1,15 +1,14 @@
 package co.johnnyli.gamer;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
@@ -23,15 +22,14 @@ public class GroupFragment extends ListFragment implements AdapterView.OnItemCli
     private ListView listView;
     GroupJSONAdapter mJSONAdapter;
     private static final String URL = "http://ec2-52-11-124-82.us-west-2.compute.amazonaws.com/api/myinfo";
-    ProgressDialog mDialog;
+    private TextView noGroup;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.group_fragment, container, false);
         listView = (ListView) view.findViewById(android.R.id.list);
-        mDialog = new ProgressDialog(GroupFragment.this.getActivity());
-        mDialog.setMessage("Loading");
-        mDialog.setCancelable(true);
+        noGroup = (TextView) view.findViewById(R.id.no_groups);
+        noGroup.setVisibility(View.GONE);
         getGroup();
         return view;
     }
@@ -65,15 +63,17 @@ public class GroupFragment extends ListFragment implements AdapterView.OnItemCli
                 try {
                     JSONArray jsonArray = jsonObject.optJSONArray("results");
                     JSONObject jsonData = jsonArray.getJSONObject(0);
-                    mJSONAdapter.updateData(jsonData.optJSONArray("groups"));
+                    if (jsonData.optJSONArray("groups").length() > 0) {
+                        mJSONAdapter.updateData(jsonData.optJSONArray("groups"));
+                    } else {
+                        noGroup.setVisibility(View.VISIBLE);
+                    }
                 } catch (Exception e) {
-                    Log.d("ERROR!", e.toString());
                 }
             }
 
             @Override
             public void onFailure(int statusCode, Throwable throwable, JSONObject error) {
-                mDialog.dismiss();
                 Toast.makeText(GroupFragment.this.getActivity(), "Error: " + statusCode + " " +
                         throwable.getMessage(), Toast.LENGTH_LONG).show();
             }

@@ -6,7 +6,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
@@ -32,7 +31,7 @@ public class AddPost extends ActionBarActivity implements View.OnClickListener {
         setContentView(R.layout.activity_add_post);
         setTitle("Add Post");
         //ActionBar Color
-        String color = MainActivity.color;
+        String color = Feed.color;
         ActionBar bar = getSupportActionBar();
         bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor(color)));
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
@@ -41,8 +40,6 @@ public class AddPost extends ActionBarActivity implements View.OnClickListener {
         post_text = (EditText) findViewById(R.id.post_text);
         Button post_button = (Button) findViewById(R.id.post_button);
         post_button.setOnClickListener(this);
-        Button cancel_button = (Button) findViewById(R.id.cancel_button);
-        cancel_button.setOnClickListener(this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
@@ -70,18 +67,19 @@ public class AddPost extends ActionBarActivity implements View.OnClickListener {
 
                 @Override
                 public void onFailure(int statusCode, Throwable throwable, JSONObject error) {
-                    Log.d("Error", error.toString());
                 }
             });
-        } else if (v.getId() == R.id.cancel_button) {
-            finish();
-            startActivity(group);
         }
         post_text.setText("");
     }
 
     @Override
     public void onBackPressed() {
+        final Intent group = new Intent(this, Group.class);
+        group.putExtra("pk", pk);
+        group.putExtra("name", name);
+        finish();
+        startActivity(group);
     }
 
     @Override

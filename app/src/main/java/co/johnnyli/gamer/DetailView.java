@@ -7,7 +7,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -50,7 +49,7 @@ public class DetailView extends ActionBarActivity implements View.OnClickListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.detail_view);
         //ActionBar color
-        String color = MainActivity.color;
+        String color = Feed.color;
         ActionBar bar = getSupportActionBar();
         bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor(color)));
         String label = this.getIntent().getExtras().getString("label");
@@ -74,7 +73,7 @@ public class DetailView extends ActionBarActivity implements View.OnClickListene
         listView = (ListView) findViewById(R.id.comment);
         avatarView = (ImageView) findViewById(R.id.user_img);
         if (image_url != null) {
-            Picasso.with(mContext).load(image_url).into(avatarView);
+            Picasso.with(mContext).load(image_url).placeholder(R.drawable.avatar).into(avatarView);
         } else {
             avatarView.setVisibility(View.GONE);
         }
@@ -147,13 +146,11 @@ public class DetailView extends ActionBarActivity implements View.OnClickListene
             client.post(postURL, params, new JsonHttpResponseHandler() {
                 @Override
                 public void onSuccess(JSONObject jsonObject) {
-                    Log.d("testing", "it worked!!!");
                     getComment(pk);
                 }
 
                 @Override
                 public void onFailure(int statusCode, Throwable throwable, JSONObject error) {
-                    Log.d("Error", error.toString());
                 }
             });
             add_comment.setText("");
@@ -170,7 +167,6 @@ public class DetailView extends ActionBarActivity implements View.OnClickListene
                             Toast.makeText(getBaseContext(), "Liked post", Toast.LENGTH_LONG).show();                        }
                         @Override
                         public void onFailure(int statusCode, Throwable throwable, JSONObject error) {
-                            Log.d("Error", error.toString());
                         }
                     });
         }

@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Base64;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,7 +30,7 @@ public class Login extends ActionBarActivity implements View.OnClickListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         //ActionBar Color
-        String color = MainActivity.color;
+        String color = Feed.color;
         ActionBar bar = getSupportActionBar();
         bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor(color)));
         user = (EditText) findViewById(R.id.username);
@@ -67,7 +66,6 @@ public class Login extends ActionBarActivity implements View.OnClickListener{
                 public void onFailure(int statusCode, Throwable throwable, JSONObject error) {
                     Toast.makeText(getApplicationContext(), "Error: Invalid username or password.",
                             Toast.LENGTH_LONG).show();
-                    Log.d("Login fail", error.toString());
                 }
             });
         } else if (v.getId() == R.id.register) {
@@ -89,9 +87,8 @@ public class Login extends ActionBarActivity implements View.OnClickListener{
                 }
                 @Override
                 public void onFailure(int statusCode, Throwable throwable, JSONObject error) {
-                    Toast.makeText(getApplicationContext(), "Error: Invalid username or password.",
+                    Toast.makeText(getApplicationContext(), "Please input a username and password.",
                             Toast.LENGTH_LONG).show();
-                    Log.d("register fail", error.toString());
                 }
             });
         }

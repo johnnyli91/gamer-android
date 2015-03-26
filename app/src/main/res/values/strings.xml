@@ -31,4 +31,12 @@
     <string name="password">Password</string>
     <string name="login">Login</string>
     <string name="register">Register</string>
+    <string name="no_posts">Your groups have no posts.</string>
+    <string name="no_groups">You\'re not in any groups.</string>
+    <string name="edit_profile">Edit</string>
+    <string name="edit_bio">Biography</string>
+    <string name="dob">Birthday: YYYY-MM-DD</string>
+    <string name="gender">Gender</string>
+    <string name="location">Location</string>
+    <string name="Save">Save</string>
 </resources>

@@ -32,7 +32,7 @@ public class Profile extends ActionBarActivity implements AdapterView.OnItemClic
         setContentView(R.layout.activity_profile);
         setTitle("Profile");
         //ActionBar Color
-        String color = MainActivity.color;
+        String color = Feed.color;
         ActionBar bar = getSupportActionBar();
         bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor(color)));
 
@@ -44,7 +44,9 @@ public class Profile extends ActionBarActivity implements AdapterView.OnItemClic
         String location = this.getIntent().getExtras().getString("location");
 
         ImageView profilePicture = (ImageView) findViewById(R.id.profile_image);
-        Picasso.with(mContext).load(picture).into(profilePicture);
+        if (picture != null) {
+            Picasso.with(mContext).load(picture).placeholder(R.drawable.avatar).into(profilePicture);
+        }
 
         TextView usernameView = (TextView) findViewById(R.id.username);
         usernameView.setText(username);

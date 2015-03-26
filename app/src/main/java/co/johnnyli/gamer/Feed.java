@@ -17,13 +17,12 @@ import com.astuetz.PagerSlidingTabStrip;
 public class Feed extends ActionBarActivity {
     private static long back_pressed;
     private ViewPager viewPager;
-    private String color;
+    public static String color = "#2f69ab";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed);
-        color = MainActivity.color;
         //Changes ActionBar color
         ActionBar bar = getSupportActionBar();
         bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor(color)));

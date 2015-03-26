@@ -27,7 +27,7 @@ public class Group extends ActionBarActivity {
         nameOfGroup = this.getIntent().getExtras().getString("name");
         pkOfGroup = this.getIntent().getExtras().getString("pk");
         setTitle(nameOfGroup);
-        color = MainActivity.color;
+        color = Feed.color;
         //ActionBar Color
         ActionBar bar = getSupportActionBar();
         bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor(color)));
@@ -39,7 +39,6 @@ public class Group extends ActionBarActivity {
         tabsStrip.setShouldExpand(true);
         tabsStrip.setIndicatorHeight(15);
         tabsStrip.setViewPager(viewPager);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
 
@@ -63,8 +62,6 @@ public class Group extends ActionBarActivity {
                 tabsStrip.setShouldExpand(true);
                 tabsStrip.setIndicatorHeight(15);
                 tabsStrip.setViewPager(viewPager);
-            case android.R.id.home:
-                finish();
         }
 
         return super.onOptionsItemSelected(item);

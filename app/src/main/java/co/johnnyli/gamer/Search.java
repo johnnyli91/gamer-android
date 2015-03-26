@@ -8,7 +8,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -44,7 +43,7 @@ public class Search extends ActionBarActivity implements View.OnClickListener,
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search);
         //ActionBar Color
-        String color = MainActivity.color;
+        String color = Feed.color;
         ActionBar bar = getSupportActionBar();
         bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor(color)));
         searchField = (EditText) findViewById(R.id.search_field);
@@ -110,7 +109,6 @@ public class Search extends ActionBarActivity implements View.OnClickListener,
                             JSONArray jsonArray = jsonObject.optJSONArray("results");
                             mJSONAdapter.updateData(jsonArray);
                         } catch (Exception e) {
-                            Log.d("ERROR!", e.toString());
                         }
                     }
 
@@ -119,7 +117,6 @@ public class Search extends ActionBarActivity implements View.OnClickListener,
                         mDialog.dismiss();
                         Toast.makeText(getApplicationContext(), "Error: " + statusCode + " " +
                                 throwable.getMessage(), Toast.LENGTH_LONG).show();
-                        Log.e("Gamer", statusCode + " " + throwable.getMessage());
                     }
                 });
     }
