@@ -34,7 +34,7 @@ public class Search extends ActionBarActivity implements View.OnClickListener,
     EditText searchField;
     Button searchButton;
     ListView searchListView;
-    private static final String QUERY_URL = "http://ec2-52-11-124-82.us-west-2.compute.amazonaws.com/api/groups?search=";
+    private static final String QUERY_URL = "http://ec2-52-11-112-83.us-west-2.compute.amazonaws.com/api/groups?search=";
     GroupListJSONAdapter mJSONAdapter;
     ProgressDialog mDialog;
 
@@ -103,13 +103,9 @@ public class Search extends ActionBarActivity implements View.OnClickListener,
                 new JsonHttpResponseHandler() {
 
                     @Override
-                    public void onSuccess(JSONObject jsonObject) {
+                    public void onSuccess(JSONArray jsonArray) {
                         mDialog.dismiss();
-                        try {
-                            JSONArray jsonArray = jsonObject.optJSONArray("results");
-                            mJSONAdapter.updateData(jsonArray);
-                        } catch (Exception e) {
-                        }
+                        mJSONAdapter.updateData(jsonArray);
                     }
 
                     @Override

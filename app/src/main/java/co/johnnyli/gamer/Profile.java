@@ -65,7 +65,7 @@ public class Profile extends ActionBarActivity implements AdapterView.OnItemClic
     }
 
     public void getGroups() {
-        String baseURL = "http://ec2-52-11-124-82.us-west-2.compute.amazonaws.com/api/users/";
+        String baseURL = "http://ec2-52-11-112-83.us-west-2.compute.amazonaws.com/api/users/";
         String pk = this.getIntent().getExtras().getString("pk");
         AsyncHttpClient client = new AsyncHttpClient();
         client.addHeader("Authorization", Login.auth);

@@ -33,8 +33,8 @@ import java.net.URLEncoder;
 public class DetailView extends ActionBarActivity implements View.OnClickListener{
 
     Context mContext;
-    private static final String base_URL = "http://ec2-52-11-124-82.us-west-2.compute.amazonaws.com/api/posts/";
-    private static final String postURL = "http://ec2-52-11-124-82.us-west-2.compute.amazonaws.com/api/comments";
+    private static final String base_URL = "http://ec2-52-11-112-83.us-west-2.compute.amazonaws.com/api/posts/";
+    private static final String postURL = "http://ec2-52-11-112-83.us-west-2.compute.amazonaws.com/api/comments";
     FeedJSONAdapter mJSONAdapter;
     TextView parent_user;
     TextView parent_post;
@@ -160,7 +160,7 @@ public class DetailView extends ActionBarActivity implements View.OnClickListene
             AsyncHttpClient client = new AsyncHttpClient();
             client.addHeader("X-CSRFToken", Info.csrftoken);
             client.addHeader("Authorization", Login.auth);
-            client.post("http://ec2-52-11-124-82.us-west-2.compute.amazonaws.com/api/like",
+            client.post("http://ec2-52-11-112-83.us-west-2.compute.amazonaws.com/api/like",
                     params, new JsonHttpResponseHandler() {
                         @Override
                         public void onSuccess(JSONObject jsonObject) {

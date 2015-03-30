@@ -21,7 +21,7 @@ public class GroupFragment extends ListFragment implements AdapterView.OnItemCli
 
     private ListView listView;
     GroupJSONAdapter mJSONAdapter;
-    private static final String URL = "http://ec2-52-11-124-82.us-west-2.compute.amazonaws.com/api/myinfo";
+    private static final String URL = "http://ec2-52-11-112-83.us-west-2.compute.amazonaws.com/api/myinfo";
     private TextView noGroup;
 
     @Override
@@ -59,9 +59,8 @@ public class GroupFragment extends ListFragment implements AdapterView.OnItemCli
         client.get(URL, new JsonHttpResponseHandler() {
 
             @Override
-            public void onSuccess(JSONObject jsonObject) {
+            public void onSuccess(JSONArray jsonArray) {
                 try {
-                    JSONArray jsonArray = jsonObject.optJSONArray("results");
                     JSONObject jsonData = jsonArray.getJSONObject(0);
                     if (jsonData.optJSONArray("groups").length() > 0) {
                         mJSONAdapter.updateData(jsonData.optJSONArray("groups"));

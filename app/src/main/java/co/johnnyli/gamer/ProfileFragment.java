@@ -24,7 +24,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
     private TextView name;
     private TextView description;
     Context mContext;
-    private static final String URL = "http://ec2-52-11-124-82.us-west-2.compute.amazonaws.com/api/myinfo";
+    private static final String URL = "http://ec2-52-11-112-83.us-west-2.compute.amazonaws.com/api/myinfo";
     private String pk;
     private String gender;
     private String dob;
@@ -65,9 +65,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         client.get(URL, new JsonHttpResponseHandler() {
 
             @Override
-            public void onSuccess(JSONObject jsonObject) {
+            public void onSuccess(JSONArray jsonArray) {
                 try {
-                    JSONArray jsonArray = jsonObject.optJSONArray("results");
                     JSONObject jsonData = jsonArray.getJSONObject(0);
                     String username = jsonData.optString("username");
                     name.setText(username);

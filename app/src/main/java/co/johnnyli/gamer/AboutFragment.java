@@ -22,7 +22,7 @@ public class AboutFragment extends Fragment implements View.OnClickListener, Ada
     private TextView name;
     private TextView description;
     private String pk;
-    private String groupURL = "http://ec2-52-11-124-82.us-west-2.compute.amazonaws.com/api/groups/";
+    private String groupURL = "http://ec2-52-11-112-83.us-west-2.compute.amazonaws.com/api/groups/";
     private MemberJSONAdapter mJSONAdapter;
     private ListView memberList;
 

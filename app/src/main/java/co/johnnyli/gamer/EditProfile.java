@@ -19,7 +19,7 @@ import org.json.JSONObject;
 
 public class EditProfile extends ActionBarActivity implements View.OnClickListener {
     private static final String postURL =
-            "http://ec2-52-11-124-82.us-west-2.compute.amazonaws.com/api/profile/";
+            "http://ec2-52-11-112-83.us-west-2.compute.amazonaws.com/api/profile/";
     private String pk;
     private EditText bio;
     private EditText dob;

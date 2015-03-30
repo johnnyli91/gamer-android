@@ -21,7 +21,7 @@ import org.json.JSONObject;
 
 public class AddGroup extends ActionBarActivity implements View.OnClickListener{
 
-    private String createURL = "http://ec2-52-11-124-82.us-west-2.compute.amazonaws.com/api/groups/";
+    private String createURL = "http://ec2-52-11-112-83.us-west-2.compute.amazonaws.com/api/groups/";
     private TextView groupName;
     private TextView description;
 

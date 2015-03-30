@@ -21,8 +21,8 @@ public class FeedFragment extends ListFragment implements AdapterView.OnItemClic
 
     private ListView listView;
     private FeedJSONAdapter mJSONAdapter;
-    private static final String URL = "http://ec2-52-11-124-82.us-west-2.compute.amazonaws.com/api/groups/feed";
-    private static final String infoURL = "http://ec2-52-11-124-82.us-west-2.compute.amazonaws.com/api/myinfo";
+    private static final String URL = "http://ec2-52-11-112-83.us-west-2.compute.amazonaws.com/api/groups/feed";
+    private static final String infoURL = "http://ec2-52-11-112-83.us-west-2.compute.amazonaws.com/api/myinfo";
     public static String userpk;
     private TextView noGroup;
 
@@ -68,9 +68,9 @@ public class FeedFragment extends ListFragment implements AdapterView.OnItemClic
         client.get(URL, new JsonHttpResponseHandler() {
 
             @Override
-            public void onSuccess(JSONObject jsonObject) {
-                if (jsonObject.optJSONArray("results").length() > 0) {
-                    mJSONAdapter.updateData(jsonObject.optJSONArray("results"));
+            public void onSuccess(JSONArray jsonArray) {
+                if (jsonArray.length() > 0) {
+                    mJSONAdapter.updateData(jsonArray);
                 } else {
                     noGroup.setVisibility(View.VISIBLE);
                 }
@@ -86,9 +86,8 @@ public class FeedFragment extends ListFragment implements AdapterView.OnItemClic
         pkClient.addHeader("Authorization", Login.auth);
         pkClient.get(infoURL, new JsonHttpResponseHandler() {
             @Override
-            public void onSuccess(JSONObject jsonObject) {
+            public void onSuccess(JSONArray jsonArray) {
                 try {
-                    JSONArray jsonArray = jsonObject.getJSONArray("results");
                     JSONObject jsonData = jsonArray.getJSONObject(0);
                     userpk = jsonData.optString("pk");
                 } catch (Exception e) {

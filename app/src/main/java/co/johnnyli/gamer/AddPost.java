@@ -6,6 +6,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
@@ -21,7 +22,7 @@ import org.json.JSONObject;
 public class AddPost extends ActionBarActivity implements View.OnClickListener {
     private EditText post_text;
     private static final String postURL =
-            "http://ec2-52-11-124-82.us-west-2.compute.amazonaws.com/api/posts";
+            "http://ec2-52-11-112-83.us-west-2.compute.amazonaws.com/api/posts";
     private String pk;
     private String name;
 
@@ -67,6 +68,7 @@ public class AddPost extends ActionBarActivity implements View.OnClickListener {
 
                 @Override
                 public void onFailure(int statusCode, Throwable throwable, JSONObject error) {
+                    Log.d("Error", error.toString());
                 }
             });
         }

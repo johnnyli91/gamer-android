@@ -23,9 +23,9 @@ public class DiscussionFragment extends ListFragment implements AdapterView.OnIt
     private ListView listView;
     DiscussionJSONAdapter mJSONAdapter;
     private static final String URL =
-            "http://ec2-52-11-124-82.us-west-2.compute.amazonaws.com/api/groups/";
+            "http://ec2-52-11-112-83.us-west-2.compute.amazonaws.com/api/groups/";
     private static final String postURL =
-            "http://ec2-52-11-124-82.us-west-2.compute.amazonaws.com/api/posts";
+            "http://ec2-52-11-112-83.us-west-2.compute.amazonaws.com/api/posts";
     private String pk;
     private Intent addPost;
 
